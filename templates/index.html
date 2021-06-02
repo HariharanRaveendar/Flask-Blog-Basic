@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% block style %}
+<style>
+  html,
+  body,
+  header,
+  #intro {
+    height: 100%;
+  }
+  #intro {
+    background: url("{{ url_for('static',filename='images/header.jpg')}}")no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
+</style>
+{% endblock style %}
+{% block main_body %}
+<header>
+  {% include 'nav.html' %}
+  <!--Mask-->
+  <div id="intro" class="view">
+    <div class="mask rgba-black-strong">
+      <div class="container-fluid d-flex align-items-center justify-content-center h-100">
+        <div class="row d-flex justify-content-center text-center">
+          <div class="col-md-10">
+            <!-- Heading -->
+            <h2 class="display-4 font-weight-bold white-text pt-5 mb-2">Welcome To My Blog!</h2>
+            <!-- Divider -->
+            <hr class="hr-light">
+            <!-- Description -->
+            <h4 class="white-text my-4">Blogging is good for your career. A well-executed blog sets you apart as an
+              expert in your field
+            </h4>
+            <a href="#content" class="btn btn-outline-white">Explore<i class="fa fa-book ml-2"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/.Mask-->
+</header>
+<main class="mt-3 pt-3" id="content">
+  <div class="container">
+    <section class="mt-4">
+      <!--Grid row-->
+      <div class="row">
+        <!--Grid column-->
+        <div class="col-md-8 mb-4">
+          <!--Card-->
+          {% for h in posts  %}
+          <div class="card mb-4 wow fadeIn">
+            <!--Card content-->
+            <div class="card-body">
+              <p class="h5 my-4">
+                {{h.Title}}
+              </p>
+              <!--Featured Image-->
+              <div class="card mb-4 wow fadeIn">
+                <img src="data:image/jpeg;base64,{{h.articleimg | img |safe }} " class="img-fluid" alt="">
+              </div>
+              <!--/.Featured Image-->
+              <blockquote class="blockquote">
+                <footer class="blockquote-footer">{{h.date}}
+                  <cite title="Source Title">{{h.FirstName}} {{h.LastName}}</cite>
+                </footer>
+              </blockquote>
+              <p>{{h.Subject}}
+              </p>
+              <div class="text-center mt-4">
+                <a href="/read/{{h.id}}" class="btn peach-gradient">Read More
+                  <i class="fa fa-book ml-2"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+          <!--/.Card-->
+          <!--Card-->
+        </div>
+        <!--Grid column-->
+        <!--Grid column-->
+        <div class="col-md-4 mb-4">
+          <!--Card: Jumbotron-->
+          <div class="card blue-gradient mb-4 wow fadeIn">
+            <!-- Content -->
+            <div class="card">
+              <h3 class="card-header light-blue lighten-1 white-text text-uppercase font-weight-bold text-center py-5">
+                My Articles
+              </h3>
+              <div class="card-body">
+                <ul class="list-group">
+                  {% for d in subcategory%}
+                  <li class="list-group-item d-flex justify-content-between align-items-center ">
+                    <a href=""
+                      class="ml-0 text-justify black-text w-100  text-bold text-uppercase   ">
+                      {{d.SubCategoryName}}
+                      <i class="fa fa-share ml-5 left" style="float: right;" aria-hidden="true"></i>
+                    </a>
+                  </li>
+                  {% endfor %}
+                </ul>
+                <p class="text-small text-muted mb-0 pt-3">* Please Subscribe for new articles.</p>
+              </div>
+            </div>
+            <!--/.Panel-->
+            <!-- Content -->
+          </div>
+          <!--Card: Jumbotron-->
+          <!--Card : Dynamic content wrapper-->
+        {% include 'homerelated.html' %}
+          <!--/.Card-->
+        </div>
+        <!--Grid column-->
+      </div>
+      <!--Grid row-->
+    </section>
+    {% include 'contact.html' %}
+  </div>
+</main>
+{% include 'footer.html' %}
+{% endblock main_body %}

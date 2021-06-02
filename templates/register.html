@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% block style %}
+<style>
+    html,
+    body,
+    header,
+    #intro {
+        background: url("{{ url_for('static',filename='images/header.jpg')}}")no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+    }
+</style>
+{% endblock style %}
+{% block main_body %}
+<header>
+    {% include 'nav.html' %}
+</header>
+<main class="mt-5 pt-5">
+    <div class="container my-5 py-5 z-depth-1">
+        <section class="px-md-5 mx-md-5 text-center text-lg-left dark-grey-text ">
+            <div class="row d-flex justify-content-center ">
+                <div class="col-md-6 bg-white z-depth-5 rounded bg-dark">
+                    <form class="text-center mt-3" action="/register" method="POST" autocomplete="off">
+                        <p class="h4 mb-4 text-white">Sign up</p>
+                        <div class="form-row mb-4">
+                            <div class="col md-form">
+                                <input type="text" id="first_name" name="first_name" value="{{first_name}}"  class="form-control text-white" placeholder="First name">
+                            </div>
+                            <div class="col md-form">
+                                <input type="text" id="last_name" name="last_name" value="{{last_name}}"  class="form-control text-white" placeholder="Last name">
+                            </div>
+                        </div>
+                        <div class="form-row mb-4">
+                            <div class="col md-form">
+                                <input type="email" id="emailc" name="email" value="{{email}}" class="form-control text-white" placeholder="E-mail">
+                            </div>
+                            <div class="col md-form">
+                                <input type="email" id="usernamec" name="username" value="{{email}}" class="form-control text-white" placeholder="Username" disabled>
+                            </div>
+                        </div>
+                         <div class="form-row mb-4">
+                            <div class="col md-form">
+                                <input type="password" id="password1" name="password"  class="form-control text-white" placeholder="Password">
+                            </div>
+                            <div class="col md-form">
+                                <input type="password" id="password2" name="password2" class="form-control text-white" placeholder="Confrim Password">
+                            </div>
+                        </div>
+                        <button class="btn btn-info " type="submit">Sign Up</button>
+                             <p class="text-white">Already a member?
+                                <a href="">Login</a>
+                            </p>
+                    </form>
+                    <div>
+                      {% for message in messages %}
+                        <h3>{{message}}</h3>
+                        {% endfor %}
+                        </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+{% include 'footer.html' %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script>
+    document.getElementById('navheader').classList.add('mdb-color', 'darken-3')
+    $("#emailc").keyup(function () {
+            update();
+        });
+
+    function update() {
+        $("#usernamec").val($('#emailc').val());
+    }
+</script>
+{% endblock main_body %}

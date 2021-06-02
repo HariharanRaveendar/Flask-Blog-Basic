@@ -1,0 +1,62 @@
+{% extends 'adminbase.html' %}
+{% block main_body %}
+<div class="container-scroller">
+   {% include 'adminnavs.html' %}
+   <div class="main-panel">
+      <div class="content-wrapper">
+         <div class="col-12 grid-margin stretch-card">
+            <div class="card">
+               <div class="card-body">
+                  <h4 class="card-title d-flex justify-content-center">Update ARTICLE</h4>
+                  <form class="forms-sample" action="/updatearticle/{{update.id}}" method="POST" autocomplete="off">
+                     <div class="form-group">
+                        <div class="input-group">
+                           <div class="input-group-prepend">
+                              <span class="input-group-text">
+                              <i class="mdi mdi mdi-hospital-building text-white"></i>
+                              </span>
+                           </div>
+                           <input type="text" class="form-control text-white" name="title" value="{{update.Title}}"
+                               placeholder="Update Title">
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <div class="input-group">
+                           <div class="input-group-prepend">
+                              <span class="input-group-text">
+                              <i class="mdi mdi mdi-hospital-building text-white"></i>
+                              </span>
+                           </div>
+                           <input type="text" class="form-control text-white"  name="subtitle" value="{{update.SubTitle}}"
+                              placeholder="Update Sub Title">
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <div class="input-group">
+                           <div class="input-group-prepend">
+                              <span class="input-group-text">
+                              <i class="mdi mdi-table-edit text-white"></i>
+                              </span>
+                           </div>
+                           <textarea class="form-control"  placeholder="Subject"  name="subject" rows="5" style="color: white;" aria-label="With textarea">{{update.Subject}}</textarea>
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <div class="input-group">
+                           <div class="input-group-prepend">
+                              <span class="input-group-text">
+                              <i class="mdi mdi-table-edit text-white"></i>
+                              </span>
+                           </div>
+                           <textarea class="form-control"  placeholder="Body"  name="body" rows="5" style="color: white;" aria-label="With textarea">{{update.Body}}</textarea>
+                        </div>
+                     </div>
+                     <button type="submit" class="btn btn-outline-success float-right">Update</button>
+                  </form>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+{% endblock main_body %}

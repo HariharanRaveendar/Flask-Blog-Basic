@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% block style %}
+<style>
+   .marker{
+   background-color: chocolate;
+   }
+   strong{
+   font-weight: bold;
+   }
+</style>
+{% endblock style %}
+{% block main_body %}
+<header>
+   {% include 'nav.html' %}
+</header>
+<main class="mt-5 pt-5">
+   <div class="container">
+      <section class="mt-4">
+         <div class="row">
+            <div class="col-md-8 mb-4">
+               <div class="card mb-4 wow fadeIn">
+                  <img src="/static/images/header.jpg" class="img-fluid" alt="">
+               </div>
+               <div class="card mb-4 wow fadeIn">
+                  <!--Card content-->
+                  <div class="card-body">
+                     <p class="h5 my-4 text-uppercase">{{read.Title}}</p>
+                     <blockquote class="blockquote">
+                        <footer class="blockquote-footer">{{read.date}}
+                           <cite title="Source Title">{{read.FirstName}} {{read.LastName}}</cite>
+                        </footer>
+                     </blockquote>
+                     <p>{{read.Subject}}
+                     </p>
+                     <p class="h5 my-4">{{read.SubTitle}}</p>
+                     <p class="d-flex justify-content-center align-text-bottom">
+                        {{read.Body | safe}}
+                     </p>
+                     <div>
+                        <div class="row mt-3">
+                        <button class="btn btn-sm btn-elegant" onclick="comments()">
+                           <i class="fas fa-comments text-warning h5-responsivet"></i></a>
+                        </button>
+                        <button class="btn btn-sm btn-elegant" id="like_btn" onclick="like({{read.id}})">
+                           <i class="far fa-heart text-danger h5-responsivet"></i>{{like_count}}
+                        </button>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div id="comments" style="display: none;">
+                  <div class="card card-comments mb-3 wow fadeIn">
+                     <div class="card-header font-weight-bold">comments</div>
+                     <div class="card-body">
+                  
+                        <div class="media d-block d-md-flex mt-4">
+                           <div class="media-body text-center text-md-left ml-md-3 ml-0">
+     
+                              <div class="row" style="display:none;">
+                                 <div class="col-md-6">
+                                    <div class="md-form mb-0">
+                                       <input type="text" id="cname" name="cname" class="form-control">
+                                       <label for="name" class="">Your name</label>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-6">
+                                    <div class="md-form mb-0">
+                                       <input type="text" id="cemail" name="cemail" class="form-control">
+                                       <label for="email" class="">Your email</label>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-10">
+                                    <div class="md-form mb-0">
+                                       <textarea type="text" id="cmessage" name="message" rows="2"
+                                          class="form-control md-textarea"></textarea>
+                                       <label for="message">Your Comments</label>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-2 mt-1">
+                                    <div class="md-form mb-0">
+                                       <button class="btn btn-sm btn-danger" onclick="postcomments({{read.id}})"><i
+                                             class="fas fa-paper-plane"></i></button>
+                                    </div>
+                                 </div>
+                              </div>
+
+                              <div class="row">
+                                 <div class="col-md-6">
+                                    <div class="md-form mb-0">
+                                       <input type="text" id="cname" name="cname" class="form-control">
+                                       <label for="name" class="">Your name</label>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-6">
+                                    <div class="md-form mb-0">
+                                       <input type="text" id="cemail" name="cemail" class="form-control">
+                                       <label for="email" class="">Your email</label>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-10">
+                                    <div class="md-form mb-0">
+                                       <textarea type="text" id="cmessage" name="message" rows="3"
+                                          class="form-control md-textarea"></textarea>
+                                       <label for="message">Your Comments</label>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-2 mt-4">
+                                    <div class="md-form mb-0">
+                                       <button class="btn btn-sm btn-elegant" onclick="postcomments({{read.id}})"><i
+                                             class="fas fa-paper-plane text-danger"></i></button>
+                                    </div>
+                                 </div>
+                              </div>
+
+                              <div id="datacomments">
+                                 {% for c in comments   %}
+                                 <h5 class="mt-0 font-weight-bold text-uppercase">{{c.CommentorName}}:
+                                 <button  class="black-text float-right white-text btn btn-sm btn-elegant" onclick="viewreply({{c.id}})">View Reply
+                                    <i class="fas fa-eye  "></i>
+                                 </button>
+                                 <button class="pull-right btn btn-sm btn-elegant float-right"  type="button" onclick="reply({{c.id}})">Reply
+                                    <i class="fas fa-reply"></i>
+                                 </button>
+
+                                 </h5>
+                                 <p class="ml-3 ">{{c.CommentorComments}}
+                                 </p>
+                                 <div id="view{{c.id}}" class="ml-5 " style="display: none;">
+                                    <blockquote class="blockquote">
+                                       <footer class="blockquote-footer">
+                                       </footer>
+                                    </blockquote>                              
+                                 </div>
+                                 {% endfor %}
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-md-4 mb-4">
+               {% include 'homerelated.html' %}
+            </div>
+         </div>
+      </section>
+      {% include 'contact.html' %}
+   </div>
+</main>
+<div class="modal fade right" id="reply" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+   aria-hidden="true">
+   <div class="modal-dialog modal-full-height modal-right modal-danger" role="document">
+      <div class="modal-content">
+         <div class="modal-header bg-dark">
+            <h4 class="modal-title white-text text-center text-uppercase w-100" id="replyname">
+
+            </h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span class="white-text" aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body bg-dark">
+
+            <div class="row mt-5" style="display:none;">
+               <div class="col-md-12">
+                  <div class="md-form mb-0">
+                     <input type="text" id="rname" name="rname" class="form-control white-text">
+                     <label for="name" class="white-text">Your name</label>
+                  </div>
+               </div>
+               <div class="col-md-12 mt-4">
+                  <div class="md-form mb-0">
+                     <input type="text" id="remail" name="remail" class="form-control white-text">
+                     <label for="email" class="white-text">Your email</label>
+                  </div>
+               </div>
+            </div>
+            <div class="row mt-4">
+               <div class="col-md-12">
+                  <div class="md-form">
+                     <textarea type="text" id="rmessage" name="rmessage" rows="5" class="form-control md-textarea white-text"></textarea>
+                     <label for="message" class="white-text">Your Comments</label>
+                  </div>
+               </div>
+            </div>
+
+            <div class="row mt-5">
+               <div class="col-md-12">
+                  <div class="md-form mb-0">
+                     <input type="text" id="rname" name="rname" class="form-control white-text">
+                     <label for="name" class="white-text">Your name</label>
+                  </div>
+               </div>
+               <div class="col-md-12 mt-4">
+                  <div class="md-form mb-0">
+                     <input type="text" id="remail" name="remail" class="form-control white-text">
+                     <label for="email" class="white-text">Your email</label>
+                  </div>
+               </div>
+            </div>
+            <div class="row mt-5">
+               <div class="col-md-12">
+                  <div class="md-form">
+                     <textarea type="text" id="rmessage" name="rmessage" rows="7" class="form-control md-textarea white-text"></textarea>
+                     <label for="message" class="white-text">Your Comments</label>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="modal-footer justify-content-center bg-dark" id="sendreply">
+            <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-success btn-sm">Post</button>
+         </div>
+      </div>
+   </div>
+</div>
+{% include 'footer.html' %}
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS_HTML"></script>
+<script>
+   document.getElementById('navheader').classList.add('mdb-color','darken-3')
+   function postcomments(id){
+      const replay = new XMLHttpRequest();
+      replay.onload = function () {
+         let responseValue = null;
+
+         try {
+            responseValue = JSON.parse(replay.responseText);
+         } catch (e) {
+            console.log("Could not parse json");
+
+         }
+         if (responseValue) {
+            console.log(responseValue)
+            document.getElementById('cname').value=null
+            document.getElementById('cemail').value=null
+            document.getElementById('cmessage').value=null
+            $("#datacomments").prepend(`<h5 class="mt-0 font-weight-bold text-uppercase">${responseValue.CommentorName}:
+                                    <button class="pull-right btn btn-sm btn-elegant float-right" type="button" onclick="reply(${responseValue.id})">Reply
+                                       <i class="fas fa-reply"></i>
+                                    </button> </h5>
+                                    <p class="ml-3">${responseValue.CommentorComments}</p>`);
+         }
+      }
+      let body = new FormData();
+      body.append('commentssave', JSON.stringify(1));
+      body.append('cname', JSON.stringify(document.getElementById('cname').value))
+      body.append('cemail', JSON.stringify(document.getElementById('cemail').value))
+      body.append('cmessage', JSON.stringify(document.getElementById('cmessage').value))
+      replay.open("POST", `../../comments/savecomments/${id}/`);
+      replay.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+      replay.send(body);
+    }
+
+   function reply(id){
+      const replay = new XMLHttpRequest();
+      replay.onload = function () {
+         let responseValue = null;
+
+         try {
+            responseValue = JSON.parse(replay.responseText);
+         } catch (e) {
+            console.log("Could not parse json");
+
+         }
+         if (responseValue) {
+            console.log(responseValue)
+            $('#reply').modal("toggle")
+            document.getElementById('replyname').innerHTML=`<p>Reply To ${responseValue.commentsname}</p>`
+            document.getElementById('sendreply').innerHTML =`<button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+                                                                  <button type="button" class="btn btn-success btn-sm" onclick="sendreplys(${responseValue.a})" >Post</button>`
+         }
+      }
+      let body = new FormData();
+      body.append('replyrecive', JSON.stringify(1));
+      replay.open("POST", `../../comments/savereply/${id}/`);
+      replay.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+      replay.send(body);
+
+   }
+   function sendreplys(id) {
+      const replay = new XMLHttpRequest();
+      replay.onload = function () {
+         let responseValue = null;
+
+         try {
+            responseValue = JSON.parse(replay.responseText);
+         } catch (e) {
+            console.log("Could not parse json");
+
+         }
+         if (responseValue) {
+            console.log(responseValue)
+            $('#reply').modal("toggle")
+            
+         }
+      }
+      let body = new FormData();
+      body.append('replyrecive', JSON.stringify(0));
+      body.append('sendreply', JSON.stringify(1));
+      body.append('rname',JSON.stringify(document.getElementById('rname').value))
+      body.append('remail', JSON.stringify(document.getElementById('remail').value))
+      body.append('rmessage', JSON.stringify(document.getElementById('rmessage').value))
+      replay.open("POST", `../../comments/savereply/${id}/`);
+      replay.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+      replay.send(body);
+
+   }
+
+   function comments(){
+      $('#comments').toggle()
+   }
+   
+   function viewreply(id){
+      if($('#view'+id).is(':visible')){
+         $('#view' + id).toggle()
+         return
+      }
+      const replay = new XMLHttpRequest();
+      replay.onload = function () {
+         let responseValue = null;
+
+         try {
+            responseValue = JSON.parse(replay.responseText);
+         } catch (e) {
+            console.log("Could not parse json");
+
+         }
+         if (responseValue) {
+            console.log(responseValue)
+            let html='';
+            for(i=0;i<responseValue.obj.length;i++){
+               html+=`<blockquote class="blockquote">
+               <h6 class="text-uppercase font-weight-bold">
+                        ${responseValue.obj[i].username}:</h6>
+                        <footer class="blockquote-footer">
+                        ${responseValue.obj[i].comments}
+                        </footer>
+                     </blockquote> `;
+            }
+            if(html==''){
+               html+=`<blockquote class="blockquote">
+                        <footer class="blockquote-footer">
+                           0 Reply Found :(
+                        </footer>
+                     </blockquote>`
+            }
+            $('#view' + responseValue.id).html(html)
+            $('#view'+responseValue.id).toggle()
+         }
+      }
+      let body = new FormData();
+      body.append('replyrecive', JSON.stringify(0));
+      body.append('sendreply', JSON.stringify(0));
+      body.append('viewreply', JSON.stringify(1));
+      replay.open("POST", `../../comments/savereply/${id}/`);
+      replay.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+      replay.send(body);
+
+   }
+   function like(id){
+       const replay = new XMLHttpRequest();
+      replay.onload = function () {
+         let responseValue = null;
+
+         try {
+            responseValue = JSON.parse(replay.responseText);
+         } catch (e) {
+            console.log("Could not parse json");
+
+         }
+         if (responseValue) {
+            console.log(responseValue)
+            $('#like_btn').html(`<i class="fas fa-heart text-danger h5-responsivet"></i> ${responseValue.count}`)
+         }
+      }
+      let body = new FormData();
+      body.append('like', JSON.stringify(1));
+      replay.open("POST", `../../comments/savelike/${id}/`);
+      replay.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+      replay.send(body);
+
+   }
+</script>
+{% endblock main_body %}

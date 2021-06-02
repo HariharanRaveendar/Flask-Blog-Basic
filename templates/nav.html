@@ -1,0 +1,66 @@
+<!--Navbar-->    
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top scrolling-navbar" id="navheader">
+    <div class="container">
+      <!-- Navbar brand -->
+      <a class="navbar-brand" href="">
+        <img src="{{ url_for('static',filename='images/hr.png')}}" class="logo" alt="Logo">
+      </a>
+      <!-- Collapse button -->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
+        aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <!-- Collapsible content -->
+      <div class="collapse navbar-collapse mt-4" id="basicExampleNav">
+        <!-- Links -->
+        <ul class="navbar-nav mr-auto smooth-scroll">
+          <li class="nav-item">
+            <a class="nav-link" href="">
+            <i class="fas fa-home"></i>
+            Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#contact">
+            <i class="fas fa-phone-alt"></i>
+            Contact</a>
+          </li>
+          {% if current_user.is_active %}
+          <li class="nav-item">
+            <a class="nav-link" href="/post">
+            <i class="fas fa-book-reader"></i>
+            Add Post</a>
+          </li>
+        <li class="nav-item">
+            <a class="nav-link" href='/logout'> 
+            <i class="fas fa-sign-in-alt"></i>
+            {{current_user.firstname }}</a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link" href='/login'> 
+          <i class="fas fa-sign-in-alt"></i>
+          Login</a>
+      </li>
+      {% endif %}
+        </ul>
+        <!-- Links -->
+        <!-- Social Icon  -->
+        <ul class="navbar-nav nav-flex-icons">
+          <li class="nav-item">
+            <a class="nav-link"><i class="fab fa-facebook"></i></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link"><i class="fab fa-twitter"></i></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link"><i class="fab fa-instagram"></i></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link"><i class="fab fa-linkedin"></i></a>
+          </li>
+        </ul>
+      </div>
+      <!-- Collapsible content -->
+    </div>
+  </nav>
+  <!--/.Navbar-->

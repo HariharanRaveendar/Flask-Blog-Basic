@@ -1,0 +1,62 @@
+<div class="card mb-4 text-center wow fadeIn">
+  <div class="card-header">Do you want to get informed about new articles?</div>
+  <!--Card content-->
+  <div class="card-body">
+    <!-- Default form login -->
+    <form>
+      <!-- Default input email -->
+      <label for="defaultFormEmailEx" class="grey-text">Your email</label>
+      <input type="email" id="SubcriberEmail" name="SubcriberEmail" class="form-control">
+      <br>
+      <!-- Default input password -->
+      <label for="defaultFormNameEx" class="grey-text">Your name</label>
+      <input type="text" id="SubcriberName" name="SubcriberName"  class="form-control">
+      <div class="text-center mt-4">
+        <button class="btn btn-info btn-md" onclick="subcribe()" type="button">Subscribe Now</button>
+      </div>
+    </form>
+    <!-- Default form login -->
+  </div>
+</div>
+<!--/.Card : Dynamic content wrapper-->
+  <div class="modal fade" id="jsondata" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-notify modal-primary" role="document">
+          <div class="modal-content">
+              <div class="modal-body mx-3">
+                  <h3 class="text-uppercase text-dark" id="msg"></h3>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">OK</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+<script>
+function subcribe() {
+const replay = new XMLHttpRequest();
+replay.onload = function () {
+let responseValue = null;
+
+try {
+responseValue = JSON.parse(replay.responseText);
+} catch (e) {
+console.log("Could not parse json");
+
+}
+if (responseValue) {
+console.log(responseValue)
+$('#msg').html(responseValue.message)
+$('#jsondata').modal('toggle')
+document.getElementById('SubcriberEmail').value=null
+document.getElementById('SubcriberName').value=null
+}
+}
+let body = new FormData();
+body.append('usersubscribe', JSON.stringify(1));
+body.append('SubcriberEmail', JSON.stringify(document.getElementById('SubcriberEmail').value))
+body.append('SubcriberName', JSON.stringify(document.getElementById('SubcriberName').value))
+replay.open("POST",`../../contact/getsubscriber/`);
+replay.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+replay.send(body);
+}
+</script>

@@ -1,0 +1,108 @@
+{% extends 'adminbase.html' %}
+
+{% block main_body %}
+<div class="container-scroller">
+   {% include 'adminnavs.html' %}
+   <div class="main-panel">
+      <div class="content-wrapper">
+         <div class="col-12 grid-margin stretch-card">
+            <div class="card">
+               <div class="card-body">
+                  <h4 class="card-title d-flex justify-content-center">ADD ARTICLE</h4>
+                  <form class="forms-sample" action="/addarticle/{{current_user.id }}" method="POST" autocomplete="off"  enctype="multipart/form-data">
+                     <div class="form-group">
+                        <div class="input-group">
+                           <div class="input-group-prepend">
+                              <span class="input-group-text">
+                              <i class="mdi mdi mdi-hospital-building text-white"></i>
+                              </span>
+                           </div>
+                           <input type="text" class="form-control text-white" name="title"
+                               placeholder="Add Title">
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <div class="input-group">
+                           <div class="input-group-prepend">
+                              <span class="input-group-text">
+                              <i class="mdi mdi mdi-hospital-building text-white"></i>
+                              </span>
+                           </div>
+                           <input type="text" class="form-control text-white"  name="subtitle"
+                              placeholder="Add Sub Title">
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <div class="input-group">
+                           <div class="input-group-prepend">
+                              <span class="input-group-text">
+                              <i class="mdi mdi-table-edit text-white"></i>
+                              </span>
+                           </div>
+                           <textarea class="form-control"  placeholder="Subject"  name="subject" rows="5" style="color: white;" aria-label="With textarea"></textarea>
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <div class="input-group">
+                           <div class="input-group-prepend">
+                              <span class="input-group-text">
+                              <i class="mdi mdi-table-edit text-white"></i>
+                              </span>
+                           </div>
+                           <textarea class="form-control"  placeholder="Body"  name="body" rows="5" style="color: white;" aria-label="With textarea"></textarea>
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <div class="input-group">
+                           <div class="input-group-prepend">
+                              <span class="input-group-text">
+                              <i class="mdi mdi mdi-hospital-building text-white"></i>
+                              </span>
+                           </div>
+                           <div class="custom-file" >
+                              <input type="file" class="custom-file-input " name="img" accept="image/*" id="label">
+                              <label class="custom-file-label " style="background-color: rgba(255, 255, 255, .3); color:#fff" for="label">Choose file</label>
+                           </div>
+                        </div>
+                     </div>
+                     <button type="submit" class="btn btn-outline-success float-right">ADD</button>
+                  </form>
+               </div>
+            </div>
+         </div>
+            <div class="col-lg-12 mt-3">
+               <div class="card">
+                  <div class="card-body">
+                     <h4 class="card-title">Articles</h4>
+                     <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
+                        <table class="table table-hover">
+                           <thead class="text-center">
+                              <tr>
+                                 <th>ID</th>
+                                 <th>Title</th>
+                                 <th>Date Published</th>
+                                 <th>Update</th>
+                                 <th>Delete</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              {% for a  in posts  %}
+                              <tr class="text-center text-white ">
+                                 <th scope="row">{{a.id}}</th>
+                                 <td>{{a.Title}}</td>
+                                 <td>{{a.date}}</td>
+                                 <td><a href="/update/{{a.id}}"
+                                       class="btn btn-outline-primary btn-sm ">Update</a></td>
+                                 <td><a href="/delete/{{a.id}}" class="btn btn-outline-danger btn-sm">Delete</a></td>
+                              </tr>
+                              {% endfor %}
+                           </tbody>
+                        </table>
+                     </div>
+                  </div>
+               </div>
+            </div>
+      </div>
+   </div>
+</div>
+{% endblock main_body %}
